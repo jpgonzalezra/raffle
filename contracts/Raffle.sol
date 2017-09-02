@@ -9,13 +9,11 @@ contract Raffle
     uint constant betAmount = 100;
     uint totalPot;
     uint whiteballs;
-    uint powerball;
 
     struct Bet 
     {
         uint amount;
         uint whiteballs;
-        uint powerball;
     }
 
     // mapping of ticket number to player.
@@ -67,10 +65,10 @@ contract Raffle
         admin = msg.sender;
     }
     
-    function DrawWinning(uint _whiteballs, uint _powerball) AdminOnly EndPlay 
+    function DrawWinning(uint _whiteballs) AdminOnly EndPlay 
     {
         // prevent administrator from calling this function more than once.
-        if(whiteballs != 0 && powerball != 0)
+        if(whiteballs != 0)
         {
             Logging("This function has already called. It can only be called once.", msg.sender);
             return;
@@ -85,7 +83,6 @@ contract Raffle
         totalPot -= _tax;
 
         whiteballs = _whiteballs;
-        powerball = _powerball;
     }
 
     function DisburseEarnings() AdminOnly EndPlay 
@@ -124,7 +121,7 @@ contract Raffle
         }
     }
     
-    function Play(uint _whiteballs, uint _powerball) payable InPlay 
+    function Play(uint _whiteballs) payable InPlay 
     {
         // check betting amount is correct.
         if(msg.value != betAmount) 
@@ -151,14 +148,13 @@ contract Raffle
         // track player's bet.
         lotto[msg.sender].push(Bet({
             amount: msg.value,
-            whiteballs: _whiteballs,
-            powerball: _powerball
+            whiteballs: _whiteballs
             }));
     }
     
     function Check() EndPlay 
     {
-        if(whiteballs == 0 && powerball == 0) 
+        if(whiteballs == 0) 
         {
             Logging("please check again. Winning balls have not been drawn yet.", msg.sender);
             return;
@@ -168,10 +164,9 @@ contract Raffle
         
         for(uint i = 0; i < _bets.length; i++) 
         {
-            if( _bets[i].whiteballs == whiteballs && 
-                _bets[i].powerball == powerball) 
+            if( _bets[i].whiteballs == whiteballs ) 
             {
-                Logging("You're a PowerBall winner!", msg.sender);
+                Logging("You're a winner!", msg.sender);
                 // track winners.
                 winners.push(msg.sender);
             }

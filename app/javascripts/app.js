@@ -1,4 +1,4 @@
-import "../stylesheets/app.css";
+//import "../stylesheets/app.css";
 
 import { default as Web3} from 'web3';
 import { default as contract } from 'truffle-contract'
@@ -35,7 +35,7 @@ window.App = {
   },
 
   listen: function() {
-    
+
     /*Raffle.deployed().then(function(instance) {
       instance.Logging(
         {},
@@ -82,13 +82,37 @@ window.App = {
 
   },
 
+  Check: function() {
+
+    Raffle.deployed().then(function(instance) {
+      var raffle = instance;
+      return raffle.Check.call({from: account});
+    }).then(function(response) {
+      console.log(response)
+    }).catch(function(e) {
+      console.log(false)
+    });
+  },
+
+  GetTotalPot: function() {
+
+    Raffle.deployed().then(function(instance) {
+      var raffle = instance;
+      return raffle.GetTotalPot.call({from: account});
+    }).then(function(response) {
+      console.log(response.toString())
+    }).catch(function(e) {
+      console.log(false)
+    });
+  },
+
   Log: function() {
 
     Raffle.deployed().then(function(instance) {
       var raffle = instance;
       return raffle.Log.call({from: account});
     }).then(function(response) {
-      console.log(response)
+      console.log(response.toString())
     }).catch(function(e) {
       console.log(false)
     });

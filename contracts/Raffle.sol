@@ -16,6 +16,8 @@ contract Raffle
         uint whiteballs;
     }
 
+    event Logging(string _output, address indexed _caller);
+
     // mapping of ticket number to player.
     mapping(address => Bet[]) lotto;
     // list of winners.
@@ -25,7 +27,7 @@ contract Raffle
     {
         if (msg.sender == admin) 
         {
-            SimpleLogging("AdminOnly TRUE");
+            Logging("AdminOnly TRUE", msg.sender);
             _;   // continue
         }
     }
@@ -34,7 +36,7 @@ contract Raffle
     {
         if(msg.sender != admin && block.timestamp < end) 
         {
-            SimpleLogging("InPlay TRUE");
+            Logging("InPlay TRUE", msg.sender);
             _;   // continue
         }
     }
@@ -45,13 +47,10 @@ contract Raffle
             block.timestamp >= end &&
             block.timestamp < redemption) 
         {
-            SimpleLogging("EndPlay TRUE");
+            Logging("EndPlay TRUE", msg.sender);
             _;   // continue
         }
     }
-
-    event Logging(string output, address caller);
-    event SimpleLogging(string output);
     
     // constructor
     function Raffle(uint feePercent, uint unixEndTime, uint daysToRedeem) 
@@ -176,6 +175,12 @@ contract Raffle
     function GetTotalPot() returns (uint)
     {
         return totalPot;
+    }
+
+    function Log() returns (uint)
+    {
+        Logging("Called Log", msg.sender);
+        return 1;
     }
 
 }

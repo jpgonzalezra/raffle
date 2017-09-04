@@ -30,8 +30,14 @@ y darle ethers desde METAMASK
 
 ```
 truffle(default)> compile
-truffle(default)> migrate
+truffle(default)> migrate --reset
 truffle(default)> Raffle.deployed().then(function(contractInstance) {contractInstance.GetTotalPot.call().then(function(v) {console.log(v)})})
+```
+
+### ACCEDER A PROPIEDADES DEL CONTRATO
+
+```
+truffle(default)> Raffle.deployed().then(function(contractInstance) {console.log(contractInstance.address)})
 ```
 
 ## SITES IMPORTANTES

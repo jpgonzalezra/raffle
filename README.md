@@ -40,6 +40,14 @@ truffle(default)> Raffle.deployed().then(function(contractInstance) {contractIns
 truffle(default)> Raffle.deployed().then(function(contractInstance) {console.log(contractInstance.address)})
 ```
 
+### LEVANTAR BROWSER Y PROBAR DESDE LA WEB
+
+```
+npm run dev
+```
+
+Luego abrir http://localhost:8080
+
 ## SITES IMPORTANTES
 
 UNIX TIME https://www.unixtimestamp.com/index.php

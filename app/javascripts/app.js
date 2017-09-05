@@ -36,50 +36,31 @@ window.App = {
 
   listen: function() {
 
-    /*Raffle.deployed().then(function(instance) {
-      instance.Logging(
-        {},
-        {fromBlock: 0, toBlock: 'latest'},
-        function(error, event){
-          console.log(error, event);
-        }
-      )
-    });*/
-
-    /*Raffle.deployed().then(function(instance) {
-      var allEvents = instance.allEvents({fromBlock: 0, toBlock: 'latest'}, (err, event) => {
-        console.log(err, event)
-      });
-      allEvents.get(function(error, events){
-        console.log(error, events)
-      });
-    });*/
-
-    /*Raffle.deployed().then(function(instance) {
-      instance.Logging({_caller: account}, {
-        fromBlock: 0,
-        toBlock: 'latest'
-      }, (err, event) => {
-        console.log(err, event)
-      }).watch(function (err, result) {
-        if (err) console.log(err)
-        console.log(result)
-      })
-    });*/
-
-    /*
+    // Parece que en la testrpc no funciona el listening de los eventos
     Raffle.deployed().then(function(instance) {
-      instance.allEvents({}, {
-        fromBlock: 0,
-        toBlock: 'latest'
-      }, (err, event) => {
-        console.log(err, event)
-      }).watch(function (err, result) {
-        if (err) console.log(err)
-        console.log(result)
-      })
-    })*/
+      var events = instance.allEvents({fromBlock: 0, toBlock: 'latest'});
 
+      events.watch(function(e, result){
+        debugger
+      });
+
+      instance.allEvents({ fromBlock: 0 }, (error, result) => {
+        debugger
+      });
+    });
+
+  },
+
+  Play: function() {
+
+    let price = 0.0000000000000001; //ethers
+    Raffle.deployed().then(function(instance) {
+      instance.Play(13, {value: web3.toWei(price, 'ether'), from: web3.eth.accounts[0]}).then(function(result) {
+        console.log(result);
+      }).catch(function(e) {
+        console.log(e)
+      });
+    });
   },
 
   Check: function() {

@@ -87,11 +87,11 @@ window.App = {
     });
   },
 
-  Log: function() {
+  debug: function() {
 
     Raffle.deployed().then(function(instance) {
       var raffle = instance;
-      return raffle.Log.call({from: account});
+      return raffle.debug.call();
     }).then(function(response) {
       console.log(response.toString())
     }).catch(function(e) {
